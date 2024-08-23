@@ -50,7 +50,7 @@ const ServerHeader = ({
                     transition"
                 >
                     {server.name}
-                    <ChevronDown className="h-5 w-5 ml-auto"/>
+                    <ChevronDown className="hidden md:block h-5 w-5 ml-auto"/>
                 </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent

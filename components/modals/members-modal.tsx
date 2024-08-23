@@ -45,8 +45,6 @@ export const MembersModal = () => {
 
     const isModalOpen = isOpen && type === "members";
     const { server } = data as { server: ServerWithMembersWithProfiles };
-
-    console.log(server);
     
     const onRoleChange = async (memberId: string, role: MemberRole) => {
         try {

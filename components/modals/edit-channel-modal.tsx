@@ -55,7 +55,6 @@ export const EditChannelModal = () => {
     const isModalOpen = isOpen && type === "editChannel";
     const { channel, server } = data;
 
-    console.log(channel);
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
