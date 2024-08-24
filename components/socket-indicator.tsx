@@ -5,8 +5,6 @@ import { Badge } from "@/components/ui/badge";
 
 export const SocketIndicator = () => {
     const { isConnected } = useSocket();
-
-    console.log(isConnected);
     
     if (!isConnected) {
         return (
