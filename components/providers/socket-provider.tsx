@@ -36,6 +36,7 @@ export const SocketProvider = ({
         })
 
         socketInstance.on("connect", () => {
+            console.log('connected to ' + socketInstance.id);
             setIsConnected(true);
         });
 

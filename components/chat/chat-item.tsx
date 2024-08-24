@@ -5,6 +5,7 @@ import axios from "axios";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter, useParams } from "next/navigation";
 
 import { Member, MemberRole, Profile } from "@prisma/client";
 import { UserAvatar } from "../user-avatar";
@@ -70,6 +71,18 @@ const ChatItem = ({
     const [isEditing, setIsEditing] = useState(false);
     const { onOpen } = useModal();
 
+    const params = useParams();
+    const router = useRouter();
+
+    const onMemberClick = () => {
+        console.log(member.id, currentMember.id)
+        if (member.id === currentMember.id) {
+            return
+        }
+
+        router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+    };
+
     useEffect(() => {
         const handleKeyDown = (event: any) => {
             if (event.key === "Escape" || event.keyCode === 27) {
@@ -101,6 +114,7 @@ const ChatItem = ({
             await axios.patch(url, values);
 
             form.reset();
+
             setIsEditing(false);
         } catch (err) {
             console.log(err);
@@ -130,7 +144,8 @@ const ChatItem = ({
             <div
                 className="group flex gap-x-2 items-start w-full">
                 <div
-                    className="cursor-pointer hover: drop-shadow-md transition">
+                onClick={onMemberClick}
+                className="cursor-pointer hover: drop-shadow-md transition">
                     <UserAvatar className="mr-2" src={member.profile.imageUrl} />
                 </div>
                 <div
@@ -139,7 +154,9 @@ const ChatItem = ({
                         className="flex items-center gap-x-2 mb-2">
                         <div
                             className="flex items-center">
-                            <p className="font-semibold text-sm hover:underline cursor-pointer">
+                            <p 
+                            onClick={onMemberClick}
+                            className="font-semibold text-sm hover:underline cursor-pointer">
                                 {member.profile.name}
                             </p>
                             <ActionTooltip label={member.role}>
