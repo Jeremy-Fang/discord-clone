@@ -29,6 +29,7 @@ export const useChatSocket = ({
         }
 
         socket.on(updateKey, (message: MessageWithMemberWithProfile) => {
+            queryClient.invalidateQueries();
             queryClient.setQueryData([queryKey], (oldData: any) => {
                 if (!oldData || !oldData.pages || oldData.pages.length === 0) {
                     return oldData;
@@ -55,6 +56,7 @@ export const useChatSocket = ({
         });
 
         socket.on(addKey, (message: MessageWithMemberWithProfile) => {
+            queryClient.invalidateQueries();
             queryClient.setQueryData([queryKey], (oldData: any) => {
                 if (!oldData || !oldData.pages || oldData.pages.length === 0) {
                     return {
@@ -80,11 +82,5 @@ export const useChatSocket = ({
                 }
             });
         });
-
-        return () => {
-            socket.off(addKey);
-            socket.off(updateKey);
-        }
-
     }, [queryClient, addKey, queryKey, socket, updateKey]);
 }

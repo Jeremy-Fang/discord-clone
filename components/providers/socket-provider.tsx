@@ -6,11 +6,12 @@ import {
     useEffect,
     useState
 } from "react";
+import { Socket } from "socket.io";
 
 import { io as ClientIO } from "socket.io-client";
 
 type SocketContextType = {
-    socket: any | null;
+    socket: Socket | null;
     isConnected: boolean;
 };
 
@@ -37,14 +38,13 @@ export const SocketProvider = ({
 
         socketInstance.on("connect", () => {
             console.log('connected to ' + socketInstance.id);
+            setSocket(socketInstance);
             setIsConnected(true);
         });
 
         socketInstance.on("disconnect", () => {
             setIsConnected(false);
         });
-
-        setSocket(socketInstance);
 
         return () => {
             socketInstance.disconnect();
